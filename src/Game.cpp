@@ -1,8 +1,7 @@
 #include "Game.hpp"
 #include "TextureManager.hpp"
 #include "Map.hpp"
-#include "ECS/Components/Position.hpp"
-#include "ECS/ECS.hpp"
+#include "ECS/Components/Component.hpp"
 
 SDL_Renderer* Game::renderer = nullptr;
 Map* map;
@@ -39,7 +38,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
 
     map = new Map();
-    newPlayer.addComponent<Position>();
+    newPlayer.addComponent<Position>(0,0);
+    newPlayer.addComponent<Sprite>("assets/Player.png");
 }
 
 void Game::handleEvents() {
@@ -55,12 +55,14 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
+    manager.refresh();
     manager.update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
     map->DrawMap();
+    manager.draw();
     SDL_RenderPresent(renderer);
 }
 

@@ -1,8 +1,7 @@
 #ifndef POSITION_HPP
 #define POSITION_HPP
 
-#include "../ECS.hpp"
-
+#include "Component.hpp"
 class Position : public Component
 {
 private:
@@ -10,6 +9,7 @@ private:
     int ypos;
 
 public:
+    Position(int x, int y);
     int x();
     int y();
     void init();
