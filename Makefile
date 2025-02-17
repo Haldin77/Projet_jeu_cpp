@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g -I/usr/include/SDL2
+CXXFLAGS = -Wall -g -I/usr/include/SDL2 -Isrc -Isrc/ECS -Isrc/ECS/Components
 
 # Linker flags
 LDFLAGS = `sdl2-config --libs` -lSDL2_image
@@ -11,22 +11,29 @@ LDFLAGS = `sdl2-config --libs` -lSDL2_image
 SOURCES = $(shell find src -name "*.cpp")
 
 # Object files
-OBJECTS = $(SOURCES:.cpp=.o)
+OBJECTS = $(patsubst src/%, build/obj/%, $(SOURCES:.cpp=.o))
 
 # Executable name
-TARGET = game
+TARGET = build/bin/game
 
 # Default target
-all: $(TARGET)
+all: $(TARGET)@echo "fin"
+
 
 # Build the executable
 $(TARGET): $(OBJECTS)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	@ $(CXX) -o $@ $^ $(LDFLAGS)
+	@ echo "fin"
 
 # Compile source files
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+build/obj/%.o: src/%.cpp
+	@ mkdir -p $(dir $@)
+	@ $(CXX) $(CXXFLAGS) -c $< -o $@
+	@ echo "$<"
 
 # Clean up
 clean:
 	rm -f $(OBJECTS) $(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)

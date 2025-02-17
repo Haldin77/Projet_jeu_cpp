@@ -1,7 +1,8 @@
 #include "Sprite.hpp"
+#include "TextureManager.hpp"
 
 Sprite::Sprite(const char* path){
-    texture = TextureManager::LoadTexture(path);
+    setText(path);
 }
 
 void Sprite::init()
@@ -21,4 +22,8 @@ void Sprite::update()
 void Sprite::draw()
 {
     TextureManager::DrawTexture(texture,srcRect,destRect);
+}
+
+void Sprite::setText(const char * path){
+    texture = TextureManager::LoadTexture(path);
 }

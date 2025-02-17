@@ -1,7 +1,8 @@
 #ifndef POSITION_HPP
 #define POSITION_HPP
 
-#include "Component.hpp"
+#include "ECS.hpp"
+
 class Position : public Component
 {
 private:
